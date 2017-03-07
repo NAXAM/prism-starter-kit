@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:app="clr-namespace:Naxam.Template"
+	x:Class="Naxam.Template.AddTodoPage"
+	Title="Add new TODO"
+	>
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<app:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			Text="Save"
+			Command="{Binding AddTodoCommand}"
+		/>
+	</ContentPage.ToolbarItems>
+	<StackLayout Spacing="0" Padding="16, 24, 16, 16">
+		<Label 
+			FontSize="14"
+			Text="Title"
+			/>
+		<Entry 
+			FontSize="16"
+			Placeholder="Enter todo's title"
+			Text="{Binding Todo.Title}"
+			/>
+
+		<StackLayout Orientation="Horizontal">
+			<Label 
+				FontSize="14"
+				Text="Done?"
+				/>
+			<Switch 
+				IsToggled="{Binding Todo.Done}"
+				HorizontalOptions="EndAndExpand"
+				/>
+		</StackLayout>
+		
+		<StackLayout IsVisible="{Binding Todo.Done, Converter={StaticResource InverseBooleanConverter}}">
+			<StackLayout Orientation="Horizontal">
+				<Label 
+					FontSize="14"
+					Text="Has deadline?"
+					/>
+				<Switch 
+					IsToggled="{Binding Todo.HasDeadline}"
+					HorizontalOptions="EndAndExpand"
+					/>
+			</StackLayout>
+
+			<StackLayout Orientation="Horizontal" IsVisible="{Binding Todo.HasDeadline}">
+				<Label 
+					FontSize="14"
+					Text="Deadline"
+					/>
+				<DatePicker 
+					Date="{Binding Todo.Deadline}"
+					HorizontalOptions="EndAndExpand"
+					Format="dd/MM/yyyy"
+					/>
+			</StackLayout>
+		</StackLayout>
+	</StackLayout>
+</ContentPage>
